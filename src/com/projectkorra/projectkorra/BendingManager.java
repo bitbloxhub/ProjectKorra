@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import co.aikar.timings.lib.MCTiming;
-
 import com.projectkorra.projectkorra.event.WorldTimeEvent;
 import com.projectkorra.projectkorra.util.ChatUtil;
 import com.projectkorra.projectkorra.util.TempFallingBlock;
@@ -34,20 +32,18 @@ public class BendingManager implements Runnable {
 	long interval;
 	private final HashMap<World, WorldTimeEvent.Time> times = new HashMap<>(); // true if day time
 
-	private final MCTiming CORE_ABILITY_TIMING, TEMP_POTION_TIMING, DAY_NIGHT_TIMING, HORIZONTAL_VELOCITY_TRACKER_TIMING, COOLDOWN_TIMING, TEMP_ARMOR_TIMING, ACTIONBAR_STATUS_TIMING, TEMP_FALLING_BLOCKS;
-
 	public BendingManager() {
 		instance = this;
 		this.time = System.currentTimeMillis();
 
-		this.CORE_ABILITY_TIMING = ProjectKorra.timing("CoreAbility#ProgressAll");
-		this.TEMP_POTION_TIMING = ProjectKorra.timing("TempPotion#ProgressAll");
-		this.DAY_NIGHT_TIMING = ProjectKorra.timing("HandleDayNight");
-		this.HORIZONTAL_VELOCITY_TRACKER_TIMING = ProjectKorra.timing("HorizontalVelocityTracker#UpdateAll");
-		this.COOLDOWN_TIMING = ProjectKorra.timing("HandleCooldowns");
-		this.TEMP_ARMOR_TIMING = ProjectKorra.timing("TempArmor#Cleanup");
-		this.ACTIONBAR_STATUS_TIMING = ProjectKorra.timing("ActionBarCheck");
-		this.TEMP_FALLING_BLOCKS = ProjectKorra.timing("TempFallingBlock#manage");
+		//this.CORE_ABILITY_TIMING = ProjectKorra.timing("CoreAbility#ProgressAll");
+		//this.TEMP_POTION_TIMING = ProjectKorra.timing("TempPotion#ProgressAll");
+		//this.DAY_NIGHT_TIMING = ProjectKorra.timing("HandleDayNight");
+		//this.HORIZONTAL_VELOCITY_TRACKER_TIMING = ProjectKorra.timing("HorizontalVelocityTracker#UpdateAll");
+		//this.COOLDOWN_TIMING = ProjectKorra.timing("HandleCooldowns");
+		//this.TEMP_ARMOR_TIMING = ProjectKorra.timing("TempArmor#Cleanup");
+		//this.ACTIONBAR_STATUS_TIMING = ProjectKorra.timing("ActionBarCheck");
+		//this.TEMP_FALLING_BLOCKS = ProjectKorra.timing("TempFallingBlock#manage");
 
 		times.clear();
 
@@ -122,33 +118,33 @@ public class BendingManager implements Runnable {
 		this.time = System.currentTimeMillis();
 		ProjectKorra.time_step = this.interval;
 
-		try (MCTiming timing = this.CORE_ABILITY_TIMING.startTiming()) {
+		//try (MCTiming timing = this.CORE_ABILITY_TIMING.startTiming()) {
 			CoreAbility.progressAll();
-		}
+		//}
 
-		try (MCTiming timing = this.TEMP_POTION_TIMING.startTiming()) {
+		//try (MCTiming timing = this.TEMP_POTION_TIMING.startTiming()) {
 			TempPotionEffect.progressAll();
-		}
+		//}
 
-		try (MCTiming timing = this.DAY_NIGHT_TIMING.startTiming()) {
+		//try (MCTiming timing = this.DAY_NIGHT_TIMING.startTiming()) {
 			this.handleDayNight();
-		}
+		//}
 
 		RevertChecker.revertAirBlocks();
 
-		try (MCTiming timing = this.HORIZONTAL_VELOCITY_TRACKER_TIMING.startTiming()) {
+		//try (MCTiming timing = this.HORIZONTAL_VELOCITY_TRACKER_TIMING.startTiming()) {
 			HorizontalVelocityTracker.updateAll();
-		}
+		//}
 
-		try (MCTiming timing = this.COOLDOWN_TIMING.startTiming()) {
+		//try (MCTiming timing = this.COOLDOWN_TIMING.startTiming()) {
 			this.handleCooldowns();
-		}
+		//}
 
-		try (MCTiming timing = this.TEMP_ARMOR_TIMING.startTiming()) {
+		//try (MCTiming timing = this.TEMP_ARMOR_TIMING.startTiming()) {
 			TempArmor.cleanup();
-		}
+		//}
 
-		try (MCTiming timing = this.ACTIONBAR_STATUS_TIMING.startTiming()) {
+		//try (MCTiming timing = this.ACTIONBAR_STATUS_TIMING.startTiming()) {
 			for (final Player player : Bukkit.getOnlinePlayers()) {
 				if (Bloodbending.isBloodbent(player)) {
 					ActionBar.sendActionBar(Element.BLOOD.getColor() + "* Bloodbent *", player);
@@ -156,11 +152,11 @@ public class BendingManager implements Runnable {
 					ActionBar.sendActionBar(Element.METAL.getColor() + "* MetalClipped *", player);
 				}
 			}
-		}
+		//}
 
-		try (MCTiming timing = this.TEMP_FALLING_BLOCKS.startTiming()) {
+		//try (MCTiming timing = this.TEMP_FALLING_BLOCKS.startTiming()) {
 			TempFallingBlock.manage();
-		}
+		//}
 	}
 
 	public static String getSunriseMessage() {

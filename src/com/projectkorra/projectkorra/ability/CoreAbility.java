@@ -32,8 +32,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ClassInfo;
 
-import co.aikar.timings.lib.MCTiming;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -273,9 +271,9 @@ public abstract class CoreAbility implements Ability {
 						abil.attributesModified = true;
 					}
 
-					try (MCTiming timing = ProjectKorra.timing(abil.getName()).startTiming()) {
+					//try (MCTiming timing = ProjectKorra.timing(abil.getName()).startTiming()) {
 						abil.progress();
-					}
+					//}
 
 					Bukkit.getServer().getPluginManager().callEvent(new AbilityProgressEvent(abil));
 				} catch (final Exception e) {
